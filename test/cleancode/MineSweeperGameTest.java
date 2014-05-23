@@ -36,18 +36,18 @@ public class MineSweeperGameTest {
      */
     @Test
     public void ShouldGetNoFlaggedCell() {
-        List<int[]> flaggedCells = mineSweeper.GetFgdCells();
+        List<int[]> flaggedCells = mineSweeper.getFlaggedCells();
 
         assertThat(flaggedCells.size(), is(equalTo(0)));
     }
 
     @Test
     public void ShouldGetSomeFlaggedCells() {
-        mineSweeper.Flg(1);
-        mineSweeper.Flg(7);
-        mineSweeper.Flg(9);
+        mineSweeper.flagCell(1);
+        mineSweeper.flagCell(7);
+        mineSweeper.flagCell(9);
 
-        List<int[]> flaggedCells = mineSweeper.GetFgdCells();
+        List<int[]> flaggedCells = mineSweeper.getFlaggedCells();
 
         assertThat(flaggedCells.size(), is(equalTo(3)));
     }

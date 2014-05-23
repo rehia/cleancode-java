@@ -18,28 +18,45 @@ public class ImageEditor {
     }
 
     public void ScaleToOneDimension(float desiredDimension) {
-        if (Math.abs(desiredDimension - image.getWidth()) < 0.01f) {
+        if (isTooClosedToImageWidth(desiredDimension)) {
             return;
         }
 
-        float scalingFactor = desiredDimension / image.getWidth();
-        scalingFactor = (float) (Math.floor(scalingFactor * 100) * 0.01f);
+        float scalingFactor = calculateScalingFactor(desiredDimension);
 
-        Image scaledImage = ImageUtilities.getScaledImage(image, scalingFactor);
+        Image scaledImage = scaleImage(scalingFactor);
 
-        replaceImage(scaledImage);
+        ReplaceImage(scaledImage);
     }
 
-    private void replaceImage(Image scaledImage) {
+    private Image scaleImage(float scalingFactor) {
+        return ImageUtilities.getScaledImage(image, scalingFactor);
+    }
+
+    private float calculateScalingFactor(float desiredDimension) {
+        float scalingFactor = desiredDimension / image.getWidth();
+        scalingFactor = truncateNumberTo2Digits(scalingFactor);
+        return scalingFactor;
+    }
+
+    private static float truncateNumberTo2Digits(float number) {
+        return (float) (Math.floor(number * 100) * 0.01f);
+    }
+
+    private boolean isTooClosedToImageWidth(float desiredDimension) {
+        return Math.abs(desiredDimension - image.getWidth()) < 0.01f;
+    }
+
+    private void ReplaceImage(Image transformedImage) {
         image.dispose();
         System.gc();
-        image = scaledImage;
+        image = transformedImage;
     }
 
     public void Rotate(int degrees) {
         Image rotatedImage = ImageUtilities.getRotatedImage(image, degrees);
 
-        replaceImage(rotatedImage);
+        ReplaceImage(rotatedImage);
     }
 
     public Image image() {

@@ -14,23 +14,25 @@ import java.util.List;
  */
 public class MineSweeperGame {
 
-    private List<int[]> theList;
+    private List<int[]> gameBoard;
 
-    public MineSweeperGame(List<int[]> theList) {
-        this.theList = theList;
+    public MineSweeperGame(List<int[]> gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
-    public List<int[]> GetFgdCells() {
-        List<int[]> list1 = new ArrayList<int[]>();
-        for (int[] x : theList) {
-            if (x[0] == 4) {
-                list1.add(x);
+    public List<int[]> getFlaggedCells() {
+        List<int[]> flaggedCells = new ArrayList<int[]>();
+        for (int[] cell : gameBoard) {
+            if (cell[CELL_STATUS] == FLAGGED) {
+                flaggedCells.add(cell);
             }
         }
-        return list1;
+        return flaggedCells;
     }
+    private static final int FLAGGED = 4;
+    private static final int CELL_STATUS = 0;
 
-    public void Flg(int id) {
-        theList.get(id)[0] = 4;
+    public void flagCell(int id) {
+        gameBoard.get(id)[CELL_STATUS] = FLAGGED;
     }
 }
